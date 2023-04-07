@@ -20,6 +20,7 @@ Route::post('/cars', [CarController::class, 'store']);
 Route::put('/cars/{car}', [CarController::class, 'update']);
 Route::delete('/cars/{car}', [CarController::class, 'destroy']);
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
+Route::get('/active-user', [AuthController::class, 'getActiveUser'])->middleware('auth');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth');
