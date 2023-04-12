@@ -17,7 +17,7 @@ class GradebookFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->numberBetween(1,4) + fake()->randomLetter(),
+            'name' => fake()->numberBetween(1, 4) . fake()->randomLetter(),
             'user_id' => fake()->numberBetween(1, 20)
         ];
     }

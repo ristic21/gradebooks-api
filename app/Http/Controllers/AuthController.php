@@ -12,12 +12,12 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
 
-  
+
     public function login(Request $request)
     {
         $credentials = $request->only(['email', 'password']);
 
-      
+
         $token = Auth::attempt($credentials);
 
         if ($token) {
@@ -36,7 +36,7 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         $data['password'] = Hash::make($data['password']);
-        $data['confirmed_password'] = Hash::make($data['confirmed_password']);
+        $data['password_confirmation'] = Hash::make($data['password_confirmation']);
         $user = User::create($data);
 
         $token = Auth::login($user);

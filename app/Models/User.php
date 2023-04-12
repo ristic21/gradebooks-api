@@ -16,14 +16,14 @@ class User extends Authenticatable implements JWTSubject
     use HasApiTokens, HasFactory, Notifiable;
 
 
-     /**
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
      */
     public function getJWTIdentifier()
     {
-        return $this->id();
+        return $this->id;
     }
 
     /**
@@ -34,11 +34,12 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [
-            'first_name'=>$this->first_name,
-            'last_name'=>$this->last_name,
-            'email'=>$this->email,
-            'image_url'=>$this->image_url,
-            'has_grade'=>$this->has_grade
+            'id' => $this->id,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
+            'email' => $this->email,
+            'image_url' => $this->image_url,
+            'gradebook_id' => $this->gradebook_id
         ];
     }
 
@@ -63,9 +64,26 @@ class User extends Authenticatable implements JWTSubject
         'last_name',
         'email',
         'password',
+        'password_confirmation',
         'image_url',
-        'has_grade',
+        'gradebook_id',
     ];
+
+    public static function scopeSearchByFirstName($query, $first_name)
+    {
+        if (!$first_name) {
+            return $query;
+        }
+        return $query->where('first_name', 'like', "%$first_name%");
+    }
+    public static function scopeSearchByLastName($query, $last_name)
+    {
+        if (!$last_name) {
+            return $query;
+        }
+        return $query->where('last_name', 'like', "%$last_name%");
+    }
+
 
     /**
      * The attributes that should be hidden for serialization.

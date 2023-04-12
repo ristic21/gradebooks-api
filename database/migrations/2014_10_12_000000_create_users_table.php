@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('password_confirmation')->default('password');
             $table->string('image_url');
-            $table->boolean('has_grade')->default(false);
+            $table->foreignId('gradebook_id')->default('0');
             $table->rememberToken();
             $table->timestamps();
         });
